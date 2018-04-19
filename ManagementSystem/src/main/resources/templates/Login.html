@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Login画面</title>
+</head>
+<body>
+	<p th:text="${msg}">please wait...</p>
+	<form method="post" action="/">
+		<label>ユーザID&nbsp&nbsp&nbsp&nbsp：</label>
+		<input type="text" name="UserId" th:value="${id}" />
+		<br>
+		<label>ユーザPass&nbsp：</label>
+		<input type="text" name="UserPass" th:value="${pass}" />
+		<br>
+		<input type="submit" value="ログイン" />
+	</form>
+	
+	
+</body>
+</html>

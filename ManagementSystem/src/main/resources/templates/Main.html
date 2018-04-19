@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>メニュー画面</title>
+</head>
+<body>
+	<p th:text="${msg}">please wait...</p>
+	<label>ユーザID&nbsp&nbsp&nbsp&nbsp：</label>
+	<label th:text="${id}"></label>
+	<label>&nbsp&nbsp&nbsp&nbsp：</label>
+	<label>ユーザPass&nbsp：</label>
+	<label th:text="${pass}"></label>
+	
+	<br><br>
+	<form method="post" action="/Serch">
+		<label>検索画面&nbsp&nbsp</label>
+		<input type="submit" value="Click" />
+	</form>
+	<br>
+	<form method="post" action="/Register">
+		<label>登録画面&nbsp&nbsp</label>
+		<input type="submit" value="Click" />
+	</form>
+	<br>
+	<form method="post" action="/Delete">
+		<label>削除画面&nbsp&nbsp</label>
+		<input type="submit" value="Click" />
+	</form>
+	<br>
+</body>
+</html>
+

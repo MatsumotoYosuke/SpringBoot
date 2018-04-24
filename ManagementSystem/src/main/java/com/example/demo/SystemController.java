@@ -11,9 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 import common.ConstGlobal;
 import logic.LoginLogic;
 
+/**
+ * 画面遷移時のトリガーとなるクラス
+ */
 @Controller
 public class SystemController {
-	
+	/**
+	 * 画面遷移メソッド
+	 * @param mav　遷移情報
+	 * @return ModelAndView 遷移情報
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView login(ModelAndView mav) {
 		mav.setViewName(ConstGlobal.gstrLogin);
@@ -21,6 +28,13 @@ public class SystemController {
 		return mav;
 	}
 
+	/**
+	 * 画面遷移メソッド
+	 * @param id　入力値ユーザーID
+	 * @param pass　入力値ユーザーPass
+	 * @param mav 画面遷移情報
+	 * @return ModelAndView 遷移情報
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView send(@RequestParam("UserId") String id,@RequestParam("UserPass") String pass, ModelAndView mav) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -36,6 +50,11 @@ public class SystemController {
 		return mav;
 	}
 
+	/**
+	 * 画面遷移メソッド
+	 * @param mav　遷移情報
+	 * @return ModelAndView 遷移情報
+	 */
 	@RequestMapping(value = "/Serch", method = RequestMethod.POST)
 	public ModelAndView serchControl(ModelAndView mav) {
 		mav.setViewName(ConstGlobal.gstrSerch);
@@ -43,6 +62,11 @@ public class SystemController {
 		return mav;
 	}
 	
+	/**
+	 * 画面遷移メソッド
+	 * @param mav　遷移情報
+	 * @return ModelAndView 遷移情報
+	 */
 	@RequestMapping(value = "/Register", method = RequestMethod.POST)
 	public ModelAndView registerControl(ModelAndView mav) {
 		mav.setViewName(ConstGlobal.gstrRegister);
@@ -50,6 +74,11 @@ public class SystemController {
 		return mav;
 	}
 	
+	/**
+	 * 画面遷移メソッド
+	 * @param mav　遷移情報
+	 * @return ModelAndView 遷移情報
+	 */
 	@RequestMapping(value = "/Delete", method = RequestMethod.POST)
 	public ModelAndView deleteControl(ModelAndView mav) {
 		mav.setViewName(ConstGlobal.gstrDelete);

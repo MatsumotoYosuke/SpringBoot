@@ -1,8 +1,9 @@
 package common;
 
-
+/**
+ * プロジェクトで使用する定数を纏めた共通クラス
+ */
 public class ConstGlobal{
-	
 	
 	// DB接続文字列
 	/** DB接続用ユーザ名*/

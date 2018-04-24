@@ -5,7 +5,18 @@ import java.util.ArrayList;
 import common.ConstGlobal;
 import sql.S_User_Master;
 
+/**
+ * Loginボタン押下後に呼ばれるclass
+ */
 public class LoginLogic {
+	
+	/**
+	 * Loginボタン押下後に呼ばれるメソッド<br>
+	 * 画面遷移の制御
+	 * @param id ユーザID
+	 * @param pass ユーザパスワード
+	 * @return ArrayList 画面遷移情報
+	 */
 	public static ArrayList<String> DetermineLogin(String id,String pass) {
 		
 		// SQL検索条件を格納するリスト

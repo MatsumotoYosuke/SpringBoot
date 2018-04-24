@@ -24,6 +24,8 @@ public class SystemController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView send(@RequestParam("UserId") String id,@RequestParam("UserPass") String pass, ModelAndView mav) {
 		ArrayList<String> list = new ArrayList<String>();
+		
+		// ログイン時の判定処理
 		list = LoginLogic.DetermineLogin(id,pass);
 		
 		mav.setViewName(list.get(ConstGlobal.zero));

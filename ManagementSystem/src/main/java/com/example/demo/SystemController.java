@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import common.ConstGlobal;
 import logic.LoginLogic;
+import logic.RegisterLogic;
 
 /**
  * 画面遷移時のトリガーとなるクラス
@@ -35,7 +36,7 @@ public class SystemController {
 	 * @param mav 画面遷移情報
 	 * @return ModelAndView 遷移情報
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/Menu", method = RequestMethod.POST)
 	public ModelAndView send(@RequestParam("UserId") String id,@RequestParam("UserPass") String pass, ModelAndView mav) {
 		ArrayList<String> list = new ArrayList<String>();
 		
@@ -85,4 +86,34 @@ public class SystemController {
 		mav.addObject("msg", ConstGlobal.gstrDeleteScreen); // 表示メッセージ
 		return mav;
 	}
+	
+	/**
+	 * 登録完了画面遷移メソッド
+	 * @param mav　遷移情報
+	 * @return ModelAndView 遷移情報
+	 */
+	@RequestMapping(value = "/Completion", method = RequestMethod.POST)
+	public ModelAndView registerCompletControl(@RequestParam("CustomerName") String customerName,
+			@RequestParam("CustomerNameKana") String customerNameKana, @RequestParam("CustomerNo") String customerNo,
+			@RequestParam("PostalCode") String postalCode, @RequestParam("StreetAddress") String streetAddress,
+			@RequestParam("StreetAddressKana") String streetAddressKana, ModelAndView mav) {
+		
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list.add(customerName);
+		list.add(customerNameKana);
+		list.add(customerNo);
+		list.add(postalCode);
+		list.add(streetAddress);
+		list.add(streetAddressKana);
+		
+		// 登録処理開始
+		RegisterLogic.DetermineRegister(list);
+		
+		
+		mav.setViewName(ConstGlobal.gstrRegisterComplet);
+		mav.addObject("msg", ConstGlobal.gstrRegisterCompletScreen); // 表示メッセージ
+		return mav;
+	}
+	
 }

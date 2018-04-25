@@ -5,6 +5,35 @@
 <title>登録画面</title>
 </head>
 <body>
-	<label>Register画面だよ</label>
+	<form method="post" action="/Completion">
+		<table>
+			<tr>
+				<th>顧客名</th>
+				<th><input type="text" name="CustomerName" th:value="${CustomerName}" maxlength="10" /></th>
+			</tr>
+			<tr>
+				<th>顧客名(ｶﾅ)</th>
+				<th><input type="text" name="CustomerNameKana" th:value="${CustomerNameKana}" maxlength="10" /></th>
+			</tr>
+			<tr>
+				<th>顧客番号</th>
+				<th><input type="text" name="CustomerNo" th:value="${CustomerNo}" maxlength="12" /></th>
+			</tr>
+			<tr>
+				<th>郵便番号</th>
+				<th><input type="text" name="PostalCode" th:value="${PostalCode}" maxlength="7" /></th>
+			</tr>
+			<tr>
+				<th>住所</th>
+				<th><input type="text" name="StreetAddress" th:value="${StreetAddress}" maxlength="50" /></th>
+			</tr>
+			<tr>
+				<th>住所(ｶﾅ)</th>
+				<th><input type="text" name="StreetAddressKana" th:value="${StreetAddressKana}" maxlength="100" /></th>
+			</tr>
+		</table>
+		<input type="submit" value="登録" />
+	</form>
+	
 </body>
 </html>

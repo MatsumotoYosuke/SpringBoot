@@ -34,6 +34,10 @@ public class ConstGlobal{
 	public final static String gstrSerchScreen = "検索画面";
 	/** 検索*/
 	public final static String gstrSerch = "Serch";
+	/** 登録完了画面*/
+	public final static String gstrRegisterCompletScreen = "登録完了画面";
+	/** 登録完了*/
+	public final static String gstrRegisterComplet = "Completion";
 	
 	/** 0*/
 	public final static int zero = 0;

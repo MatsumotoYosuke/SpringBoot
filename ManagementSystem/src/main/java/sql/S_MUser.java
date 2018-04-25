@@ -20,7 +20,7 @@ public class S_MUser {
 		// SQL作成
 		String StrSql = StrSqlLogin();
 		// 検索実行
-		ResultList = DatabaseConnection.SqlRun(StrSql,SearchCriteriaList);
+		ResultList = DatabaseConnection.SelectSqlRun(StrSql,SearchCriteriaList);
 		// 検索結果を返す
 		return ResultList;
 		

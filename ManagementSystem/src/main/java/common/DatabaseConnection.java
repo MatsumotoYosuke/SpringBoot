@@ -37,7 +37,7 @@ public class DatabaseConnection {
 	}
 	
 	/**
-	 * SQLを実行する共通メソッド
+	 * SQL（select）を実行する共通メソッド
 	 * 
 	 * @param strSql
 	 *            検索時に使用するSQL
@@ -45,7 +45,7 @@ public class DatabaseConnection {
 	 *            SQLのWhere区に渡すパラメータ
 	 * @return ArrayList<Hashtable<String, String>> 検索結果を格納したリスト
 	 */
-	public static ArrayList<Hashtable<String, String>> SqlRun(String strSql, ArrayList<String> list) {
+	public static ArrayList<Hashtable<String, String>> SelectSqlRun(String strSql, ArrayList<String> list) {
 
 		// コネクション取得
 		Connection con = DbConnection();
@@ -119,5 +119,61 @@ public class DatabaseConnection {
 		}
 		// 検索結果を返す
 		return returnList;
+	}
+	
+	/**
+	 * SQL（insert）を実行する共通メソッド
+	 * 
+	 * @param strSql
+	 *            登録時に使用するSQL
+	 * @param list
+	 *            SQLのバインド値に渡すパラメータ
+	 */
+	public static void InsertSqlRun(String strSql, ArrayList<String> list) {
+
+		// コネクション取得
+		Connection con = DbConnection();
+		// 実行するSQL取得
+		String sql = strSql;
+		// 検索結果を格納する変数
+		ResultSet rs = null;
+		// SQL をプリコンパイル
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			// SQLに引数を入れる
+			int index = 1;
+			for (String Value : list) {
+				pstmt.setString(index++, Value);
+			}
+
+			// SQL 実行
+			rs = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				// 接続
+				if (con != null) {
+					// 接続をクローズ
+					con.close();
+				}
+				// 接続
+				if (rs != null) {
+					// 結果セットをクローズ
+					rs.close();
+				}
+				// ステートメントをクローズ
+				if (pstmt != null) {
+					// 結果セットをクローズ
+					pstmt.close();
+				}
+
+			} catch (SQLException e) {
+				// 例外処理
+			}
+		}
 	}
 }

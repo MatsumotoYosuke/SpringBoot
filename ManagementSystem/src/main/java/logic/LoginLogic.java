@@ -1,9 +1,11 @@
 package logic;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 import common.ConstGlobal;
-import sql.S_User_Master;
+import sql.S_MUser;
 
 /**
  * Loginボタン押下後に呼ばれるclass
@@ -22,7 +24,7 @@ public class LoginLogic {
 		// SQL検索条件を格納するリスト
 		ArrayList<String> listValue = new ArrayList<String>();
 		// 画面遷移先を格納するリスト
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> returnList = new ArrayList<String>();
 		// 画面遷移情報
 		int ScreenFlag = 0;
 		
@@ -32,13 +34,20 @@ public class LoginLogic {
 			listValue.add(pass);
 			
 			// 検索条件を引数に渡す
-			ResultSet result = S_User_Master.LoginUserMaster(listValue);
+			ArrayList<Hashtable<String, String>> ResultList = 
+					S_MUser.LoginUserMaster(listValue);
 
 			// データの存在チェック
-			while (result.next()) {
-				System.out.println(result.getString("USER_NAME") + "," + result.getString("USER_ID") + ","
-						+ result.getString("USER_PASS"));
+			for (Hashtable<String, String> list : ResultList) {
 				
+				// データindex件目のフィールド名リストを取得
+				Enumeration<String> keyList = list.keys();
+				while (keyList.hasMoreElements()) {
+					// フィールド名取得
+					String key = (String) keyList.nextElement();
+					// データ出力
+					System.out.println(key + ":" + list.get(key));
+				}
 				// データが検索出来た為、flagを１に変更
 				ScreenFlag = 1;
 			}
@@ -49,14 +58,15 @@ public class LoginLogic {
 		
 		if(ScreenFlag == 1) {
 			// メニュー画面へ遷移
-			list.add(ConstGlobal.gstrMain);
-			list.add(ConstGlobal.gstrMainScreen);
+			returnList.add(ConstGlobal.gstrMain);
+			 // 表示メッセージ
+			returnList.add(ConstGlobal.gstrMainScreen);
 		} else {
 			// ログイン画面へ遷移
-			list.add(ConstGlobal.gstrLogin);
-			list.add(ConstGlobal.gstrLoginScreen); // 表示メッセージ
-
+			returnList.add(ConstGlobal.gstrLogin);
+			 // 表示メッセージ
+			returnList.add(ConstGlobal.gstrLoginScreen);
 		}
-		return list;
+		return returnList;
 	}
 }

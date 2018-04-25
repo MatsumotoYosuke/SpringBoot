@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 /**
  * DB接続の際、必要となる情報の集合共通class
  */
@@ -14,7 +16,7 @@ public class DatabaseConnection {
 	 * DB接続時に使用する共通メソッド
 	 * @return Connection　コネクション
 	 */
-	public static Connection DbConnection() {
+	private static Connection DbConnection() {
 		Connection con = null;
 		// DBに接続処理
 		try {
@@ -33,21 +35,32 @@ public class DatabaseConnection {
 		// コネクションを返す
 		return con;
 	}
+	
 	/**
 	 * SQLを実行する共通メソッド
-	 * @param strSql 検索時に使用するSQL
-	 * @param list SQLのWhere区に渡すパラメータ
-	 * @return ResultSet　検索結果
+	 * 
+	 * @param strSql
+	 *            検索時に使用するSQL
+	 * @param list
+	 *            SQLのWhere区に渡すパラメータ
+	 * @return ArrayList<Hashtable<String, String>> 検索結果を格納したリスト
 	 */
-	public static ResultSet SqlRun(String strSql, ArrayList<String> list) {
+	public static ArrayList<Hashtable<String, String>> SqlRun(String strSql, ArrayList<String> list) {
 
-		// DBに接続処理
+		// コネクション取得
 		Connection con = DbConnection();
+		// 実行するSQL取得
 		String sql = strSql;
+		// 検索結果を格納する変数
 		ResultSet rs = null;
+		// フィールド名を格納する変数
+		ResultSetMetaData rsmd = null;
+		//データ格納
+		ArrayList<Hashtable<String, String>> returnList
+		   = new ArrayList<Hashtable<String, String>>();
 
 		// SQL をプリコンパイル
-		PreparedStatement pstmt;
+		PreparedStatement pstmt = null;
 		try {
 			pstmt = con.prepareStatement(sql);
 
@@ -59,20 +72,52 @@ public class DatabaseConnection {
 
 			// SQL 実行
 			rs = pstmt.executeQuery();
+			// フィールド名取得
+			rsmd = rs.getMetaData();
+			
+			while (rs.next()) {
+				// 1件分のデータ(連想配列)
+				Hashtable<String, String> hdata = new Hashtable<String, String>();
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					// フィールド名
+					String field = rsmd.getColumnName(i);
+					// フィールド名に対するデータ
+					String getdata = rs.getString(field);
+					if (getdata == null) {
+						getdata = "";
+					}
+					// データ格納(フィールド名, データ)
+					hdata.put(field, getdata);
+				}
+				// 1件分のデータを格納
+				returnList.add(hdata);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
+				// 接続
 				if (con != null) {
+					// 接続をクローズ
 					con.close();
 				}
+				// 接続
+				if (rs != null) {
+					// 結果セットをクローズ
+					rs.close();
+				}
+				// ステートメントをクローズ
+				if (pstmt != null) {
+					// 結果セットをクローズ
+					pstmt.close();
+				}
+
 			} catch (SQLException e) {
 				// 例外処理
-				System.err.println(e.getMessage());
 			}
 		}
 		// 検索結果を返す
-		return rs;
+		return returnList;
 	}
 }

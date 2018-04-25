@@ -1,34 +1,36 @@
 package sql;
 
-
-import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import common.DatabaseConnection;
 
 /**
  * Loginボタン押下後に呼ばれるclass
  */
-public class S_User_Master {
+public class S_MUser {
 	/**
 	 * Loginボタン押下後に呼ばれるメソッド
 	 * @param list 検索条件
-	 * @return ResultSet 検索結果
+	 * @return ArrayList 検索結果を格納したリスト
 	 */
-	public static ResultSet LoginUserMaster(ArrayList<String> list) {
-		
+	public static ArrayList<Hashtable<String, String>> LoginUserMaster(ArrayList<String> SearchCriteriaList) {
+		// 検索結果のデータ格納
+		ArrayList<Hashtable<String, String>> ResultList
+		   = new ArrayList<Hashtable<String, String>>();
 		// SQL作成
 		String StrSql = StrSqlLogin();
 		// 検索実行
-		ResultSet rs = DatabaseConnection.SqlRun(StrSql,list);
+		ResultList = DatabaseConnection.SqlRun(StrSql,SearchCriteriaList);
 		// 検索結果を返す
-		return rs;
+		return ResultList;
+		
 	}
 	
 	/**
 	 * Login時の検索用SQL生成メソッド
 	 * @return String 検索用SQL
 	 */
-	public static String StrSqlLogin() {
+	private static String StrSqlLogin() {
 		
 		// Login時に使用するSQL構成
 		StringBuilder sb = new StringBuilder();
@@ -37,7 +39,7 @@ public class S_User_Master {
 		sb.append("  , USER_ID ");
 		sb.append("  , USER_PASS  ");
 		sb.append("from ");
-		sb.append("  USER_MASTER  ");
+		sb.append("  M_USER  ");
 		sb.append("where ");
 		sb.append("  USER_ID = ?  ");
 		sb.append("  and USER_PASS = ? ");

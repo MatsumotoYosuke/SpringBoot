@@ -51,7 +51,7 @@ public class SystemController {
 	}
 
 	/**
-	 * 画面遷移メソッド
+	 * 検索画面遷移メソッド
 	 * @param mav　遷移情報
 	 * @return ModelAndView 遷移情報
 	 */
@@ -63,7 +63,7 @@ public class SystemController {
 	}
 	
 	/**
-	 * 画面遷移メソッド
+	 * 登録画面遷移メソッド
 	 * @param mav　遷移情報
 	 * @return ModelAndView 遷移情報
 	 */
@@ -75,7 +75,7 @@ public class SystemController {
 	}
 	
 	/**
-	 * 画面遷移メソッド
+	 * 削除画面遷移メソッド
 	 * @param mav　遷移情報
 	 * @return ModelAndView 遷移情報
 	 */

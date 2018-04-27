@@ -26,7 +26,7 @@ public class LoginLogic {
 		// 画面遷移先を格納するリスト
 		ArrayList<String> returnList = new ArrayList<String>();
 		// 画面遷移情報
-		int ScreenFlag = 0;
+		boolean ScreenFlag = false;
 		
 		try {
 			// 検索項目をlistValueに格納
@@ -47,26 +47,28 @@ public class LoginLogic {
 					String key = (String) keyList.nextElement();
 					// データ出力
 					System.out.println(key + ":" + list.get(key));
+					// データが検索出来た為、flagを１に変更
+					ScreenFlag = true;
 				}
-				// データが検索出来た為、flagを１に変更
-				ScreenFlag = 1;
 			}
 		
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
-		if(ScreenFlag == 1) {
+		if(ScreenFlag) {
 			// メニュー画面へ遷移
 			returnList.add(ConstGlobal.gstrMain);
-			 // 表示メッセージ
+			// 表示メッセージ
 			returnList.add(ConstGlobal.gstrMainScreen);
 		} else {
 			// ログイン画面へ遷移
 			returnList.add(ConstGlobal.gstrLogin);
-			 // 表示メッセージ
+			// 表示メッセージ
 			returnList.add(ConstGlobal.gstrLoginScreen);
 		}
+		// ログインフラグ
+		returnList.add(String.valueOf(ScreenFlag));
 		return returnList;
 	}
 }

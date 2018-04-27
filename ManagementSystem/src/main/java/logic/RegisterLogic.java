@@ -1,7 +1,6 @@
 package logic;
 
 import java.util.ArrayList;
-import common.ConstGlobal;
 import sql.I_WCustomerInformation;
 
 /**

@@ -2,20 +2,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link th:href="@{/css/base.css}" rel="stylesheet" type="text/css" />
 <title>Login画面</title>
 </head>
-<body>
+<body th:object="${form}">
 	<p th:text="${msg}">please wait...</p>
-	<form method="post" action="/Menu">
-		<label>ユーザID&nbsp&nbsp&nbsp&nbsp：</label>
-		<input type="text" name="UserId" th:value="${id}" />
+	<form method="post" action="/Menu" >
+
+		<!--
+		<span th:if="${#fields.detailedErrors()}"  style="color: red">error!</span>
+		<span th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" style="color: red">error!</span>
+		-->
+		
+
+		<p th:if="${flag != null}" style="color: red">ユーザID又は、ユーザPassが間違っています</p>
+        <p th:each="error : ${#fields.detailedErrors()}">
+            <span th:text="${error.message}" style="color: red">Error message</span>
+        </p>
+
 		<br>
-		<label>ユーザPass&nbsp：</label>
-		<input type="text" name="UserPass" th:value="${pass}" />
+		<label>ユーザーID&nbsp&nbsp&nbsp&nbsp：</label>
+		<input type="text" th:field="*{id}" th:errorclass="fieldError" />
+		<br>
+		<label>ユーザーPass&nbsp：</label>
+		<input type="text" th:field="*{pass}" th:errorclass="fieldError" />
 		<br>
 		<input type="submit" value="ログイン" />
 	</form>
-	
-	
 </body>
 </html>
